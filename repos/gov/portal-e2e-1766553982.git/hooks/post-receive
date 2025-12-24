@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_DIR="$(pwd)"
+LOG_FILE="$REPO_DIR/push.log"
+PUSHER="${PUSHER_NAME:-unknown}"
+
+TS="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+
+{
+  echo "=== PUSH ==="
+  echo "time_utc=$TS"
+  echo "pusher=$PUSHER"
+  echo "repo=$REPO_DIR"
+  echo "updates:"
+  while read -r oldrev newrev refname; do
+    echo "  $refname $oldrev -> $newrev"
+  done
+  echo
+} >> "$LOG_FILE"
